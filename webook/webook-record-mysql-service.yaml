@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: webook-record-mysql
+spec:
+  type: LoadBalancer
+  selector:
+    app: webook-record-mysql
+  ports:
+  - name: http
+    protocol: TCP
+    port: 3308
+    targetPort: 3306

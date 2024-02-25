@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webook-record-mysql
+  labels:
+    app: webook-record-mysql
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: webook-record-mysql
+  template:
+    metadata:
+      name: webook-record-mysql
+      labels:
+        app: webook-record-mysql
+    spec:
+      containers:
+      - name: webook-record-mysql
+        image: mysql:8.0
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 3306
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: "root"
+        - name: MYSQL_DATABASE
+          value: "webook"
+        volumeMounts:
+        - name: mysql-storage
+          mountPath: /var/lib/mysql
+      restartPolicy: Always
+      volumes:
+      - name: mysql-storage
+        persistentVolumeClaim:
+          # PVC persistentVolumeClaim
+          claimName: webook-record-mysql-pvc

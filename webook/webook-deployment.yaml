@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webook-record-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: webook-record
+  template:
+    metadata:
+      labels:
+        #这个要和前面selector 的 matchLabels 匹配
+        app: webook-record
+    # 这个是Deployment 管理的pod的模版
+    spec:
+      containers:
+      - name: webook-record
+        image: gphughcn/gotest:webook-v0.0.1
+        ports:
+        - containerPort: 8081
